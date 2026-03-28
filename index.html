@@ -43,8 +43,8 @@
         <!-- Lottie Container -->
         <div id="lottie-preloader-container" class="w-64 h-64 md:w-80 md:h-80"></div>
         
-        <!-- Maharashtra Bakery Branding -->
-        <h2 id="preloader-text" class="mt-4 font-display text-2xl font-bold text-chocolate tracking-[0.2em] uppercase opacity-0 transition-opacity duration-1000">
+        <!-- Maharashtra Bakery Branding (Instant Fallback) -->
+        <h2 id="preloader-text" class="mt-4 font-display text-2xl font-bold text-chocolate tracking-[0.2em] uppercase transition-opacity duration-1000">
           Maharashtra Bakery
         </h2>
         
@@ -1922,14 +1922,12 @@
             renderer: 'svg',
             loop: true,
             autoplay: true,
-            path: 'assets/js/preloader_logo.json'
+            path: './assets/js/preloader_logo.json'
           });
 
-          // Smoothly reveal the "Maharashtra Bakery" text
-          setTimeout(() => {
-            const text = document.getElementById('preloader-text');
-            if (text) text.classList.remove('opacity-0');
-          }, 300);
+          // Ensure the text is visible if it somehow was hidden
+          const text = document.getElementById('preloader-text');
+          if (text) text.style.opacity = "1";
         }
       }
 
