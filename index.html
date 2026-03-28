@@ -191,21 +191,22 @@
       <section
         id="hero"
         aria-label="Maharashtra Bakery — Handcrafted Artisan Cookies"
-        class="relative min-h-screen overflow-hidden hero-gradient noise-overlay flex flex-col justify-center"
+        class="relative h-[250vh] md:h-[300vh] bg-cream"
       >
-        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 mix-blend-multiply" style="isolation: isolate;">
-          <video
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-            class="w-full h-full object-cover opacity-90"
-            style="transform: translate3d(0, 0, 0); backface-visibility: hidden; perspective: 1000px; will-change: transform;"
-          >
-            <source src="videos/cookie_2.mp4" type="video/mp4" />
-          </video>
-        </div>
+        <!-- Sticky Tracker for 3D Cookie Scrubbing -->
+        <div class="sticky top-0 h-screen w-full overflow-hidden hero-gradient noise-overlay flex flex-col justify-center">
+          <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 mix-blend-multiply" style="isolation: isolate;">
+            <video
+              id="cookie-3d-model"
+              muted
+              playsinline
+              preload="auto"
+              class="w-full h-full object-cover opacity-90"
+              style="transform: translate3d(0, 0, 0); backface-visibility: hidden; perspective: 1000px; will-change: transform;"
+            >
+              <source src="videos/cookie_2.mp4" type="video/mp4" />
+            </video>
+          </div>
         <div
           class="absolute inset-0 bg-grid-warm pointer-events-none z-0"
           style="
@@ -465,6 +466,7 @@
           <div
             class="w-px h-10 bg-gradient-to-b from-caramel/60 to-transparent animate-pulse"
           ></div>
+        </div>
         </div>
       </section>
       <section
@@ -1924,6 +1926,40 @@
     </footer>
     <script src="assets/js/main.js"></script>
     <script>
+      // 3D Apple-Style Scroll Video Scrubbing
+      document.addEventListener('DOMContentLoaded', () => {
+        const video = document.getElementById('cookie-3d-model');
+        const section = document.getElementById('hero');
+        
+        if (video && section) {
+          // Pause normal playback to allow scroll control
+          video.pause();
+          
+          let scrollTimeout;
+          window.addEventListener('scroll', () => {
+            if (!scrollTimeout) {
+              scrollTimeout = requestAnimationFrame(() => {
+                const rect = section.getBoundingClientRect();
+                const scrollableDistance = rect.height - window.innerHeight;
+                
+                // Only scrub if the user is actively inside the Hero section
+                if (scrollableDistance > 0 && rect.top <= window.innerHeight && rect.bottom >= 0) {
+                  const scrolled = Math.max(0, Math.min(scrollableDistance, -rect.top));
+                  const progress = scrolled / scrollableDistance;
+                  
+                  // Map scroll percentage directly to video exact frame
+                  if (video.duration) {
+                    video.currentTime = video.duration * progress;
+                  }
+                }
+                scrollTimeout = null;
+              });
+            }
+          }, { passive: true });
+        }
+      });
+
+      // Hide Preloader once large 3D model buffer completes
       window.addEventListener('load', function () {
         const preloader = document.getElementById('global-preloader');
         if (preloader) {
