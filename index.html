@@ -157,19 +157,18 @@
         aria-label="CookieCraft — Handcrafted Artisan Cookies"
         class="relative min-h-screen overflow-hidden hero-gradient noise-overlay flex flex-col justify-center"
       >
-        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 mix-blend-multiply" style="isolation: isolate;">
           <video
             autoplay
             muted
             loop
             playsinline
             preload="auto"
-            class="w-full h-full object-cover"
-            style="transform: translate3d(0, 0, 0); backface-visibility: hidden; perspective: 1000px; will-change: transform; filter: brightness(0.8) contrast(1.1);"
+            class="w-full h-full object-cover opacity-90"
+            style="transform: translate3d(0, 0, 0); backface-visibility: hidden; perspective: 1000px; will-change: transform;"
           >
             <source src="videos/cookie_2.mp4" type="video/mp4" />
           </video>
-          <div class="absolute inset-0 bg-chocolate/15 mix-blend-overlay"></div>
         </div>
         <div
           class="absolute inset-0 bg-grid-warm pointer-events-none z-0"
@@ -229,12 +228,12 @@
           "
         ></div>
         <div
-          class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-20 md:pt-36 md:pb-28"
+          class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-32 pb-20 md:pt-36 md:pb-28"
         >
           <div class="grid lg:grid-cols-12 gap-12 lg:gap-0 items-center">
-            <div class="lg:col-span-7 space-y-8">
+            <div class="lg:col-span-7 space-y-6 sm:space-y-8 bg-cream/75 backdrop-blur-xl p-6 sm:p-10 rounded-[2rem] md:bg-transparent md:backdrop-blur-none md:p-0 md:rounded-none shadow-warm-lg md:shadow-none border border-white/60 md:border-none">
               <div
-                class="inline-flex items-center gap-2 bg-biscuit/80 border border-border rounded-full px-4 py-1.5"
+                class="inline-flex items-center gap-2 bg-biscuit/90 border border-border rounded-full px-4 py-1.5 shadow-sm"
                 style="opacity: 0"
               >
                 <span
@@ -247,7 +246,7 @@
                 >
               </div>
               <h1
-                class="font-display text-[clamp(3.5rem,8vw,7.5rem)] font-semibold text-chocolate leading-[0.92] tracking-[-0.03em]"
+                class="font-display text-[clamp(2.75rem,10vw,7.5rem)] md:text-[clamp(3.5rem,8vw,7.5rem)] font-bold text-chocolate leading-[0.95] tracking-[-0.03em] drop-shadow-sm md:drop-shadow-none"
               >
                 Handcrafted Cookies
               </h1>
@@ -262,7 +261,7 @@
               <div class="flex flex-col sm:flex-row gap-4" style="opacity: 0">
                 <a
                   href="#order"
-                  class="magnetic-btn inline-flex items-center justify-center gap-2 bg-chocolate text-cream px-8 py-4 rounded-full text-base font-semibold hover:bg-choc-mid transition-all duration-300 hover:shadow-choc hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-caramel"
+                  class="magnetic-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-chocolate text-cream px-8 py-4 rounded-full text-base font-semibold hover:bg-choc-mid transition-all duration-300 shadow-choc-lg hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-caramel"
                   aria-label="Order handcrafted cookies"
                   >Order a Box<svg
                     class="w-4 h-4"
@@ -279,7 +278,7 @@
                     ></path></svg></a
                 ><a
                   href="#products"
-                  class="inline-flex items-center justify-center gap-2 border border-border bg-cream/60 text-chocolate px-8 py-4 rounded-full text-base font-medium hover:bg-biscuit transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-caramel"
+                  class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-chocolate/20 bg-cream/95 text-chocolate px-8 py-4 rounded-full text-base font-semibold hover:bg-biscuit transition-all duration-300 shadow-warm-md hover:shadow-warm-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-caramel"
                   aria-label="Browse cookie flavors"
                   >Browse Flavors</a
                 >
