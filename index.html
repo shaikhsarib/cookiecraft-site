@@ -32,6 +32,42 @@
     />
   </head>
   <body>
+    <!-- Premium Preloader -->
+    <div
+      id="global-preloader"
+      class="fixed inset-0 z-[9999] bg-cream flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out"
+    >
+      <div class="relative flex flex-col items-center">
+        <!-- Spinning Icon -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-caramel animate-spin"
+          style="animation-duration: 3s;"
+        >
+          <path
+            d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"
+          />
+        </svg>
+        <!-- Fading Branding Text -->
+        <h2 class="mt-6 font-display text-2xl font-bold text-chocolate tracking-[0.2em] uppercase animate-pulse">
+          Maharashtra Bakery
+        </h2>
+        <div class="mt-4 flex gap-1.5">
+          <div class="w-1.5 h-1.5 bg-caramel/60 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+          <div class="w-1.5 h-1.5 bg-caramel/60 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+          <div class="w-1.5 h-1.5 bg-caramel/60 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+        </div>
+      </div>
+    </div>
+    <!-- /Premium Preloader -->
     <svg
       aria-hidden="true"
       style="position: absolute; width: 0; height: 0; overflow: hidden"
@@ -1887,5 +1923,14 @@
       </div>
     </footer>
     <script src="assets/js/main.js"></script>
+    <script>
+      window.addEventListener('load', function () {
+        const preloader = document.getElementById('global-preloader');
+        if (preloader) {
+          preloader.classList.add('opacity-0');
+          setTimeout(() => preloader.remove(), 700);
+        }
+      });
+    </script>
   </body>
 </html>
