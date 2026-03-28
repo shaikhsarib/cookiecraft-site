@@ -198,6 +198,7 @@
           <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 mix-blend-multiply" style="isolation: isolate;">
             <video
               id="cookie-3d-model"
+              autoplay
               muted
               playsinline
               preload="auto"
@@ -1932,11 +1933,13 @@
         const section = document.getElementById('hero');
         
         if (video && section) {
-          // Pause normal playback to allow scroll control
-          video.pause();
+          // iOS Safari requires video to be playing before timeline scrubbing is unlocked
+          video.play().then(() => {
+            video.pause();
+          }).catch(() => {});
           
           let scrollTimeout;
-          window.addEventListener('scroll', () => {
+          window.addEventListener('scroll', () => { // Removed passive: true because iOS Safari can throttle it randomly
             if (!scrollTimeout) {
               scrollTimeout = requestAnimationFrame(() => {
                 const rect = section.getBoundingClientRect();
@@ -1955,17 +1958,25 @@
                 scrollTimeout = null;
               });
             }
-          }, { passive: true });
+          });
         }
       });
 
       // Hide Preloader once large 3D model buffer completes
-      window.addEventListener('load', function () {
+      const hidePreloader = () => {
         const preloader = document.getElementById('global-preloader');
-        if (preloader) {
+        if (preloader && !preloader.classList.contains('opacity-0')) {
           preloader.classList.add('opacity-0');
           setTimeout(() => preloader.remove(), 700);
         }
+      };
+
+      // Failsafe: Ensures preloader disappears eventually even if network stalls
+      setTimeout(hidePreloader, 4000);
+
+      window.addEventListener('load', function () {
+        // Enforce a minimum display time so it feels like a heavy premium experience
+        setTimeout(hidePreloader, 1500);
       });
     </script>
   </body>
