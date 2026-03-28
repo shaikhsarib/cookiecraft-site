@@ -30,44 +30,32 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&amp;display=swap"
       rel="stylesheet"
     />
+    <!-- Lottie Animation Source -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
   </head>
   <body>
-    <!-- Premium Preloader -->
+    <!-- Premium Lottie Preloader -->
     <div
       id="global-preloader"
       class="fixed inset-0 z-[9999] bg-cream flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out"
     >
       <div class="relative flex flex-col items-center">
-        <!-- Spinning Icon -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="48"
-          height="48"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-caramel animate-spin"
-          style="animation-duration: 3s;"
-        >
-          <path
-            d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"
-          />
-        </svg>
-        <!-- Fading Branding Text -->
-        <h2 class="mt-6 font-display text-2xl font-bold text-chocolate tracking-[0.2em] uppercase animate-pulse">
+        <!-- Lottie Container -->
+        <div id="lottie-preloader-container" class="w-64 h-64 md:w-80 md:h-80"></div>
+        
+        <!-- Maharashtra Bakery Branding -->
+        <h2 id="preloader-text" class="mt-4 font-display text-2xl font-bold text-chocolate tracking-[0.2em] uppercase opacity-0 transition-opacity duration-1000">
           Maharashtra Bakery
         </h2>
-        <div class="mt-4 flex gap-1.5">
+        
+        <div class="mt-6 flex gap-1.5">
           <div class="w-1.5 h-1.5 bg-caramel/60 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
           <div class="w-1.5 h-1.5 bg-caramel/60 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
           <div class="w-1.5 h-1.5 bg-caramel/60 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
         </div>
       </div>
     </div>
-    <!-- /Premium Preloader -->
+    <!-- /Premium Lottie Preloader -->
     <svg
       aria-hidden="true"
       style="position: absolute; width: 0; height: 0; overflow: hidden"
@@ -191,23 +179,21 @@
       <section
         id="hero"
         aria-label="Maharashtra Bakery — Handcrafted Artisan Cookies"
-        class="relative h-[250vh] md:h-[300vh] bg-cream"
+        class="relative min-h-[90vh] md:min-h-screen overflow-hidden hero-gradient noise-overlay flex flex-col justify-center"
       >
-        <!-- Sticky Tracker for 3D Cookie Scrubbing -->
-        <div class="sticky top-0 h-screen w-full overflow-hidden hero-gradient noise-overlay flex flex-col justify-center">
-          <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 mix-blend-multiply" style="isolation: isolate;">
-            <video
-              id="cookie-3d-model"
-              autoplay
-              muted
-              playsinline
-              preload="auto"
-              class="w-full h-full object-cover opacity-90"
-              style="transform: translate3d(0, 0, 0); backface-visibility: hidden; perspective: 1000px; will-change: transform;"
-            >
-              <source src="videos/cookie_2.mp4" type="video/mp4" />
-            </video>
-          </div>
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 mix-blend-multiply" style="isolation: isolate;">
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            class="w-full h-full object-cover opacity-90"
+            style="transform: translate3d(0, 0, 0); backface-visibility: hidden; perspective: 1000px; will-change: transform;"
+          >
+            <source src="videos/cookie_2.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div
           class="absolute inset-0 bg-grid-warm pointer-events-none z-0"
           style="
@@ -1927,55 +1913,41 @@
     </footer>
     <script src="assets/js/main.js"></script>
     <script>
-      // 3D Apple-Style Scroll Video Scrubbing
-      document.addEventListener('DOMContentLoaded', () => {
-        const video = document.getElementById('cookie-3d-model');
-        const section = document.getElementById('hero');
-        
-        if (video && section) {
-          // iOS Safari requires video to be playing before timeline scrubbing is unlocked
-          video.play().then(() => {
-            video.pause();
-          }).catch(() => {});
-          
-          let scrollTimeout;
-          window.addEventListener('scroll', () => { // Removed passive: true because iOS Safari can throttle it randomly
-            if (!scrollTimeout) {
-              scrollTimeout = requestAnimationFrame(() => {
-                const rect = section.getBoundingClientRect();
-                const scrollableDistance = rect.height - window.innerHeight;
-                
-                // Only scrub if the user is actively inside the Hero section
-                if (scrollableDistance > 0 && rect.top <= window.innerHeight && rect.bottom >= 0) {
-                  const scrolled = Math.max(0, Math.min(scrollableDistance, -rect.top));
-                  const progress = scrolled / scrollableDistance;
-                  
-                  // Map scroll percentage directly to video exact frame
-                  if (video.duration) {
-                    video.currentTime = video.duration * progress;
-                  }
-                }
-                scrollTimeout = null;
-              });
-            }
+      // Initialize Premium Lottie Preloader
+      if (typeof lottie !== 'undefined') {
+        const preloaderContainer = document.getElementById('lottie-preloader-container');
+        if (preloaderContainer) {
+          lottie.loadAnimation({
+            container: preloaderContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'assets/js/preloader_logo.json'
           });
-        }
-      });
 
-      // Hide Preloader once large 3D model buffer completes
+          // Smoothly reveal the "Maharashtra Bakery" text
+          setTimeout(() => {
+            const text = document.getElementById('preloader-text');
+            if (text) text.classList.remove('opacity-0');
+          }, 300);
+        }
+      }
+
+      // Robust Preloader Hide Logic
       const hidePreloader = () => {
         const preloader = document.getElementById('global-preloader');
         if (preloader && !preloader.classList.contains('opacity-0')) {
           preloader.classList.add('opacity-0');
+          // Allow 700ms for the CSS transition to complete before GC
           setTimeout(() => preloader.remove(), 700);
         }
       };
 
-      // Failsafe: Ensures preloader disappears eventually even if network stalls
+      // Ensure preloader finishes eventually (Failsafe)
       setTimeout(hidePreloader, 4000);
 
       window.addEventListener('load', function () {
-        // Enforce a minimum display time so it feels like a heavy premium experience
+        // Enforce 1.5s minimum preloader time to ensure high-performance vibe
         setTimeout(hidePreloader, 1500);
       });
     </script>
